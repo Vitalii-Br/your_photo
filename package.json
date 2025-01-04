@@ -1,0 +1,22 @@
+{
+  "name": "photo",
+  "version": "1.0.0",
+  "description": "Your Photo",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iarilo/your_photo.git"
+  },
+  "keywords": [
+    "photo"
+  ],
+  "author": "Vitalii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iarilo/your_photo/issues"
+  },
+  "homepage": "https://github.com/iarilo/your_photo#readme"
+}
