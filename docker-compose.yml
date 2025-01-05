@@ -1,0 +1,44 @@
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: backend
+    ports:
+      - "4200:4200" # Прокси порт с хоста на контейнер
+    depends_on:
+      - db  # Если у вас есть база данных, можно добавить её зависимость
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000" # Прокси порт с хоста на контейнер
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Пример использования базы данных (например, PostgreSQL):
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: your_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
