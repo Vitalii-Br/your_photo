@@ -10,7 +10,7 @@ services:
     depends_on:
       - db  # Если у вас есть база данных, можно добавить её зависимость
     environment:
-      - DATABASE_URL="postgresql://postgres:root@localhost:5432/your_photo?schema=public" schema=public" # Обновленная строка подключения
+     - DATABASE_URL=postgresql://postgres:root@your_photo:5432/your_photo?schema=public  # Обновленная строка подключения
     networks:
       - app-network
 
