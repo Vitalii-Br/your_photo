@@ -1,0 +1,8 @@
+{
+    "watch": ["pages", "components", "lib", "styles", "next.config.js", "tsconfig.json"],
+    "ext": "jsx,ts,tsx,json,css,scss",
+    "ignore": ["node_modules", ".next", "dist", "build"],
+    "exec": "npm run dev",
+    "delay": "1000",
+    "verbose": true
+  }

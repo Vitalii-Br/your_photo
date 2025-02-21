@@ -1,46 +1,43 @@
-
+# ===========================  build режим  =========================
 services:
+  database:
+    image: postgres:17.2
+    container_name: your_photo_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: your_photo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
-    container_name: backend
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: your_photo_backend
     ports:
-      - "4200:4200" # Прокси порт с хоста на контейнер
-    depends_on:
-      - db  # Если у вас есть база данных, можно добавить её зависимость
+      - "4200:4200"
     environment:
-     - DATABASE_URL=postgresql://postgres:root@your_photo:5432/your_photo?schema=public  # Обновленная строка подключения
-    networks:
-      - app-network
+      DATABASE_URL: "postgresql://postgres:12345@database:5432/your_photo"
+      NEXT_PUBLIC_API_URL: "http://localhost:4200"
+    depends_on:
+      - database
+    command: ["node", "dist/main.js"]  # Запуск приложения в продакшн-режиме
 
   frontend:
     build:
-      context: .
-      dockerfile: frontend/Dockerfile
-    container_name: frontend
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: your_photo_frontend
     ports:
-      - "3000:3000" # Прокси порт с хоста на контейнер
-    depends_on:
-      - backend
-    networks:
-      - app-network
-
-  # Пример использования базы данных (например, PostgreSQL):
-  db:
-    image: postgres:alpine
+      - "3000:3000"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: your_photo
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      NEXT_PUBLIC_API_URL: "http://backend:4200"  # Изменено на имя сервиса
+    command: ["node", ".next/standalone/server.js"]  # Запуск Next.js в продакшн-режиме
 
 volumes:
-  db_data:
+  postgres_data:
+

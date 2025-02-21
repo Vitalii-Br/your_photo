@@ -1,23 +1,27 @@
-# Используем официальный образ Node.js
+
+                  #  ==================== build разработка  
+#Используем Node.js
 FROM node:23.5.0
 
 # Устанавливаем рабочую директорию
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Копируем package.json и package-lock.json
-COPY frontend/package*.json ./
+COPY package*.json ./
 
 # Устанавливаем зависимости
-RUN npm install
+RUN npm install 
 
-# Копируем весь код проекта в контейнер
-COPY frontend/ .
+# Копируем исходный код
+COPY . .
 
-# Строим приложение Next.js
+# Собираем приложение
 RUN npm run build
 
-# Открываем порт, на котором будет доступен фронтенд
+# Устанавливаем порт
 EXPOSE 3000
 
-# Команда для запуска приложения
-CMD ["npm", "run", "start"]
+# Запускаем приложение
+CMD ["node", ".next/standalone/server.js"]
+
+

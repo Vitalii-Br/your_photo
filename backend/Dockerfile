@@ -1,23 +1,27 @@
-# Используем официальный образ Node.js
+  #  ==================== build разработка  ==============================
+
 FROM node:23.5.0
 
 # Устанавливаем рабочую директорию
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Копируем package.json и package-lock.json
-COPY backend/package*.json ./
+COPY package*.json ./
 
 # Устанавливаем зависимости
-RUN npm install
+RUN npm install --production
 
-# Копируем весь код проекта в контейнер
-COPY backend/ .
+# Копируем исходный код
+COPY . .
 
-# Строим проект NestJS
+# Собираем приложение
 RUN npm run build
 
-# Открываем порт, на котором работает приложение
+# Устанавливаем порт
 EXPOSE 4200
 
-# Команда для запуска приложения
-CMD ["npm", "run", "start:prod"]
+# Запускаем приложение
+CMD ["node", "dist/main.js"]  # Указываем путь к собранному файлу
+
+
+   

@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
     },
   ];
 },
+ output: "standalone",// для dev режима
 };
 
 export default nextConfig;
+
