@@ -1,0 +1,27 @@
+.form_login {
+  border: 1px solid #000000;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  gap: 5px;
+  padding: 10px;
+}
+
+.form_login_input {
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 3px;
+}
+.form_login_input::placeholder {
+  color: blue;
+}
+
+.form_login_button {
+  border: none;
+  border-radius: 3px;
+  padding: 3px;
+  color: #ffffff;
+  background-color: blue;
+  width: 50%;
+}

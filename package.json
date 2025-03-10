@@ -4,7 +4,8 @@
   "description": "Your Photo",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+     "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run start --prefix backend\""
   },
   "repository": {
     "type": "git",

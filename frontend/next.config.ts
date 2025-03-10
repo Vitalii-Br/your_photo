@@ -1,13 +1,13 @@
 import type { NextConfig } from "next";
-
+/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   /* config options here */
   
  async rewrites() {
   return [
     {
-      source: '/api/:path*',  // Перехватываем все запросы, начинающиеся с /api
-      destination: 'http://localhost:4200/api/:path*', // Проксируем на сервер NestJS на порту 4200
+      source: '/API-photo/:path*',  // Перехватываем все запросы, начинающиеся с /api
+      destination: 'http://localhost:4200/API-photo/:path*', // Проксируем на сервер NestJS на порту 4200
     },
   ];
 },

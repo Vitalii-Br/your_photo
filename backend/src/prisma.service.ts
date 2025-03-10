@@ -15,7 +15,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     const delayMs = 2000; // Задержка между попытками
     for (let i = 0; i < maxRetries; i++) {
       try {
-        console.log(`Attempting to connect to the database (Try: ${i + 1})`);
+        console.log(`Попытка подключения к базе данных (Попытка: ${i + 1})`);
         await this.$connect();
         console.log('Соединение с базой данных установлено.');
         break;
@@ -23,7 +23,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         console.error('Не удалось подключиться к базе данных. Повторная попытка через 2 секунды...');
         if (i === maxRetries - 1) {
           throw new Error(
-            'Unable to connect to the database. Please ensure the database is running and accessible.'
+            'Невозможно подключиться к базе данных. Убедитесь, что база данных работает и доступна.'
           );
         }
         await new Promise((resolve) => setTimeout(resolve, delayMs));
