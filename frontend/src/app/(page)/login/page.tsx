@@ -1,4 +1,5 @@
 import Formlogin from "@/component/form/form.login";
+import FormRegister from "@/component/form/form.register";
 
 const Login = () => {
   // useEffect(() => {
@@ -29,6 +30,7 @@ const Login = () => {
     <div>
       <h4>Login</h4>
       <Formlogin/>
+      {/* <FormRegister/> */}
     </div>
   );
 };

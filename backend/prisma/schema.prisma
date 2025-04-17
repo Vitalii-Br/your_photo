@@ -22,40 +22,67 @@ model User {
   name     String @default("")
   surname  String @default("")
   email    String @unique
-  garden   String @default("")
-  group    String @default("")
   password String @unique
 
-  fotoImage Image[]
+ 
 
-  roleId    Int? @unique  @map("rile_id") 
-  role      Role? @relation(fields: [roleId], references: [id])
+  roleId Int?   @map("rile_id")
+  role   Role? @relation(fields: [roleId], references: [id])
+
+  gardenId  Int?  @map("garden_Id")
+  garden  Garden?  @relation(fields: [gardenId], references: [id])
+
+
 }
+
+
+model Garden{
+  id    Int @id @default(autoincrement())
+  user User[]
+
+  groupId  Int   @map("group_Id")
+  group    Group  @relation(fields: [groupId], references: [id]) 
+
+}
+
+model Group {
+  id  Int  @id @default(autoincrement())
+  format10x15  String?
+  formatA4     String?
+  magnet       String?  
+  calendar     String?
+
+  garden Garden[]
+
+  imageId  Int  @unique @map("image_Id")
+  image    Image @relation(fields: [imageId], references: [id])  
+}
+
 
 model Image {
   id Int @id @default(autoincrement())
 
-  image  String[]
-  userId Int      @unique @map("user_id")
-  user   User     @relation(fields: [userId], references: [id])
+  group Group[] 
+ 
 }
 
 model Permission {
-  id       Int      @id @default(autoincrement())
+  id       Int       @id @default(autoincrement())
   resource Resource
-  actions   Actions[]
+  actions  Actions[]
 
   role Role[]
 }
 
 model Role {
-  id         Int          @id @default(autoincrement())
-  name       String     
+  id          Int          @id @default(autoincrement())
+  name        String
   permissions Permission[]
 
- 
-  user  User[]
+  user User[]
 }
+
+
 
 enum Resource {
   boss
@@ -72,5 +99,4 @@ enum Actions {
   update
   delete
 }
-
-
+//  @@index([userId]) // Индекс для быстрого поиска

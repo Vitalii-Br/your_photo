@@ -1,0 +1,91 @@
+.container {
+}
+
+.container_navBar {
+  margin: 0;
+  padding: 15px 0;
+  background-color: #e5e5e59c; 
+}
+
+.container_teg_nav {
+  display: grid;
+  justify-content: center;
+}
+.teg_nav_container_ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, auto));
+  grid-gap: 20px;
+  width: 100vw;
+  justify-content: center;
+}
+
+.container_ul_teg_li {
+  padding: 0 10px;
+  background-color: #000000;
+  border-radius: 5px;
+  position: relative;
+}
+.container_ul_teg_li_span {
+  color: #ffffff;
+}
+.navBar_container_methob {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 1s ease, max-height 1s ease;
+  background-color: #fff;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto;
+  gap: 5px;
+
+  border: 1px solid #000000;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+.container_ul_teg_li:hover .navBar_container_methob {
+  opacity: 1; /* делаем видимым */
+  max-height: 200px; /* задаём достаточно большую высоту */
+  width: 100%;
+}
+.navBar_container_methob_ZIndex_auth {
+  z-index: 4;
+}
+.navBar_container_methob_ZIndex_user {
+  z-index: 3;
+}
+.navBar_container_methob_ZIndex_role {
+  z-index: 2;
+}
+.navBar_container_methob_ZIndex_garden {
+  z-index: 1;
+}
+
+.container_methob_button {
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 0px 10px;
+  font-size: 14px;
+}
+
+.container_navBar_content {
+ 
+}
+.container_navBar_content_p {
+  text-align: center;
+}
+
+.container_methob_create {
+}
+
+.container_methob_get {
+}
+
+.container_methob_update {
+}
+
+.container_methob_delete {
+}

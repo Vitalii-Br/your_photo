@@ -5,26 +5,20 @@ import {
   MinLength,
   IsNumber,
   IsArray,
+  IsDate,
 } from 'class-validator';
+
+import { RoleDto } from 'src/role/dto/role.dto';
 
 export class AuthDto {
   @IsString()
   name: string;
 
-  @IsOptional()
   @IsString()
   surname: string;
+
   @IsEmail()
-  // @IsString()
   email: string;
-
-  @IsOptional()
-  @IsString()
-  garden: string;
-
-  @IsOptional()
-  @IsString()
-  group: string;
 
   @MinLength(6, { message: 'пароль, не меньше 6 символов' })
   @IsString()
@@ -32,32 +26,44 @@ export class AuthDto {
 
   @IsOptional()
   @IsNumber()
-  roleId: number | null
+  roleId: number | null;
+
+  @IsOptional()
+  role?: RoleDto | null
 
   // @IsOptional()
   // @IsString({each:true})
   // fotoImage: string[]
 }
 
-export class UserDto {
+export class AuthUserDto {
+  @IsOptional()
   @IsNumber()
-  id: number;
+  id?: number;
 
+  @IsOptional()
   @IsString()
-  name: string;
+  name?: string; // Now optional
+
+  @IsOptional()
   @IsString()
-  surname: string;
-  //@IsEmail()
+  surname?: string;
+
+  @IsOptional()
   @IsString()
-  email: string;
+  email?: string;
+
+  @IsOptional()
   @IsString()
-  garden: string;
-  @IsString()
-  group: string;
+  password?: string;
 
   @IsOptional()
   @IsNumber()
-  roleId: number | null
+  roleId?: number | null;
+
+
+  @IsOptional()
+  role?: RoleDto | null
 
   // @IsArray() // Проверяет, что поле является массивом
   // @IsString({ each: true })
@@ -67,6 +73,9 @@ export class UserDto {
 export class LoginDto {
   @IsString()
   name: string;
+
+  @IsString()
+  surname: string;
 
   @IsEmail()
   email: string;
@@ -78,5 +87,14 @@ export class LoginDto {
 
 export class RefreshTokenDto {
   @IsString()
-  refreshfTocen: string;
+  refreshToken: string;
+}
+
+export class ValidateTokenDTO {
+  @IsNumber()
+  id: number;
+  @IsNumber()
+  iat: number;
+  @IsNumber()
+  exp: number;
 }

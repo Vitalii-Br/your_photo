@@ -8,10 +8,13 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { RoleDto } from './dto/role.dto';
-import{Permission} from "@prisma/client"
+import { Permission } from '@prisma/client';
+import { Auth } from 'src/auth/decorators/auth.decorators';
+import { CurrentUser } from 'src/auth/decorators/user.decorators';
 
 @Controller('role')
 export class RoleController {
@@ -24,7 +27,10 @@ export class RoleController {
   }
 
   @Get('allRoles')
-  allRoles() {
+  @Auth()
+  allRoles(@CurrentUser('id') id: string) {
+    if (!id)
+      throw new NotFoundException(' токен после авторизации  отсутствует');
     return this.roleService.allRole();
   }
 
@@ -35,8 +41,8 @@ export class RoleController {
   }
 
   @Patch('update/:id')
-  updateRole(@Param('id') id: string, @Body() dto:RoleDto) {
-    return this.roleService.updateRole( +id, dto);
+  updateRole(@Param('id') id: string, @Body() dto: RoleDto) {
+    return this.roleService.updateRole(+id, dto);
   }
 
   @Delete('delete/:id')

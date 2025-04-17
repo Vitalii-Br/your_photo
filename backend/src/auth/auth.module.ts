@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { getJwtConfig } from './config/jwt.config';
-import { JwtStraregy } from './strategy/jwt.strategy';
+import { JwtStrategy } from './strategy/jwt.strategy';
 import { RoleModule } from 'src/role/role.module';
 
 //inject: внедрения зависимостей
@@ -20,7 +20,7 @@ import { RoleModule } from 'src/role/role.module';
     RoleModule
   ],
   controllers: [AuthController],
-  providers: [AuthService,PrismaService,JwtStraregy],
+  providers: [AuthService,PrismaService,JwtStrategy],
   exports: [AuthService]
 })
 export class AuthModule {}

@@ -1,15 +1,14 @@
 import {
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CurrentUserDto } from './dto/user.dto';
+import { CurrentUserDto, UpdateUserDto, UserDto } from './dto/user.dto';
 import { AuthService } from 'src/auth/auth.service';
-import { AuthDto, UserDto } from 'src/auth/auth.dto';
+
 import { hash } from 'argon2';
-import { NotFoundError } from 'rxjs';
+
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
@@ -33,13 +32,28 @@ export class UserService {
   }
 
   async getAllUser() {
-    const allUser = await this.prismaServer.user.findMany({});
+    const allUser = await this.prismaServer.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        surname: true,
+        email: true,
+        roleId: true,
+        gardenId: true,
+        role: {
+          select: {
+            name: true,
+            permissions: true,
+          },
+        },
+      },
+    });
     return allUser;
   }
 
   async searchUserById(id: number) {
     const users = await this.getAllUser();
-    const usersId = users.map((ell: UserDto) => ell.id);
+    const usersId = users.map((ell) => ell.id);
     const filterId = usersId.find((ell) => ell === id);
 
     if (filterId === undefined)
@@ -50,7 +64,7 @@ export class UserService {
     return userById;
   }
 
-  async updateUser(id: number, dto: AuthDto) {
+  async updateUser(id: number, dto: UpdateUserDto) {
     const userid = await this.searchUserById(id);
     if (!userid) throw new NotFoundException('такой id отсутствует');
 
@@ -60,6 +74,7 @@ export class UserService {
     } else {
       delete userData.password;
     }
+
     const update = await this.prismaServer.user.update({
       where: { id },
       data: userData,
